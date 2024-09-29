@@ -75,11 +75,14 @@ export async function POST(request: Request) {
       case "payment":
         const payment = new Payment(mpClient);
         const paymentData = await payment.get({ id: data.id });
-        console.log(paymentData);
+        if (paymentData.status === "approved") {
+          console.log("Payment approved");
+          console.log(paymentData);
+        }
         break;
       case "subscription_preapproval":
-        // Handle payment event
-        console.log("SUBSCRIPTION_EVENT!!!");
+        console.log("Subscription preapproval event");
+        console.log(data);
         break;
       default:
         console.log("Unhandled event type:", type);
