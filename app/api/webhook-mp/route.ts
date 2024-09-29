@@ -73,9 +73,10 @@ export async function POST(request: Request) {
 
     switch (type) {
       case "payment":
-        // Handle payment event
-        console.log("PAYMENT_EVENT!!!");
-        // Fetch payment details from Mercado Pago API if necessary
+        const payment = await fetch(
+          `https://api.mercadopago.com/v1/payments/${data.id}`
+        );
+        console.log(payment);
         break;
       case "subscription_preapproval":
         // Handle payment event
