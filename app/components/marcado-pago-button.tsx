@@ -1,36 +1,40 @@
 "use client";
 
-import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function MercadoPagoButton() {
-  const [preferenceId, setPreferenceId] = useState("");
+  const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
+  const router = useRouter();
 
-  useEffect(() => {
-    initMercadoPago(process.env.NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY as string); // Public key
-
-    const fetchPreferenceId = async () => {
-      try {
-        const response = await fetch("/api/create-checkout-mp", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            // coupleId
-          }),
-        });
-        const data = await response.json();
-        setPreferenceId(data.preferenceId);
-      } catch (error) {
-        console.error("Error fetching preferenceId:", error);
-      }
-    };
-
-    fetchPreferenceId();
-  }, []);
+  async function handleButtonClick() {
+    try {
+      setIsCreatingCheckout(true);
+      const response = await fetch("/api/create-checkout-mp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          // coupleId
+        }),
+      });
+      const data = await response.json();
+      router.push(data.initPoint);
+    } catch (error) {
+      console.error("Error fetching preferenceId:", error);
+    } finally {
+      setIsCreatingCheckout(false);
+    }
+  }
 
   return (
-    <div>{preferenceId && <Wallet initialization={{ preferenceId }} />}</div>
+    <button
+      disabled={isCreatingCheckout}
+      onClick={handleButtonClick}
+      className="bg-blue-500 text-white px-4 py-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      {isCreatingCheckout ? "Criando checkout..." : "Comprar com Mercado Pago"}
+    </button>
   );
 }
