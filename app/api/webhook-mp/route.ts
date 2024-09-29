@@ -73,6 +73,15 @@ export async function POST(request: Request) {
 
     console.log({ type, data });
 
+    // action: "payment.updated",
+    // api_version: "v1",
+    // data: {"id":"123456"},
+    // date_created: "2021-11-01T02:02:02Z",
+    // id: "123456",
+    // live_mode: false,
+    // type: "payment",
+    // user_id: 2009291621
+
     switch (type) {
       case "payment":
         // Handle payment event

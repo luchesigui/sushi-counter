@@ -10,9 +10,9 @@ export async function POST(req: NextRequest) {
 
     const createdPreference = await preference.create({
       body: {
-        // metadata: {
-        //   coupleId,
-        // },
+        metadata: {
+          test: "123",
+        },
         items: [
           {
             id: "pagina-loveyuu-19",
@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
           installments: 12,
         },
         auto_return: "approved",
+        notification_url: `${req.headers.get("origin")}/api/webhook-mp`,
         back_urls: {
           success: `${req.headers.get("origin")}/obrigado`,
           failure: `${req.headers.get("origin")}/erro`,
