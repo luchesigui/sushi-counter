@@ -57,6 +57,10 @@ export async function POST(request: Request) {
     hmac.update(manifest);
     const generatedHash = hmac.digest("hex");
 
+    // Log the generated hash and the v1 value for debugging
+    console.log("Generated Hash:", generatedHash);
+    console.log("Received v1:", v1);
+
     // Step 6: Compare the generated hash with v1 from x-signature
     if (generatedHash !== v1) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
@@ -71,15 +75,6 @@ export async function POST(request: Request) {
 
     console.log({ type, data });
 
-    // action: "payment.updated",
-    // api_version: "v1",
-    // data: {"id":"123456"},
-    // date_created: "2021-11-01T02:02:02Z",
-    // id: "123456",
-    // live_mode: false,
-    // type: "payment",
-    // user_id: 2009291621
-
     switch (type) {
       case "payment":
         // Handle payment event
@@ -91,7 +86,7 @@ export async function POST(request: Request) {
         console.log("SUBSCRIPTION_EVENT!!!");
         break;
       default:
-        console.warn("Unhandled event type:", type);
+        console.log("Unhandled event type:", type);
     }
 
     return NextResponse.json({ received: true }, { status: 200 });
