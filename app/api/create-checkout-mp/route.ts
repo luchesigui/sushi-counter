@@ -3,8 +3,6 @@ import { Preference } from "mercadopago";
 import mpClient from "@/app/lib/mercado-pago";
 
 export async function POST(req: NextRequest) {
-  // const { coupleId } = await req.json();
-
   try {
     const preference = new Preference(mpClient);
 
@@ -24,19 +22,6 @@ export async function POST(req: NextRequest) {
           },
         ],
         payment_methods: {
-          excluded_payment_methods: [
-            {
-              id: "bolbradesco",
-            },
-            {
-              id: "pec",
-            },
-          ],
-          excluded_payment_types: [
-            {
-              id: "debit_card",
-            },
-          ],
           installments: 12,
         },
         auto_return: "approved",
