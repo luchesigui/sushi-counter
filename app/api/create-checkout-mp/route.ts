@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
             title: "Página Loveyuu",
             picture_url: "https://www.loveyuu.com/favicon.ico",
             quantity: 1,
-            unit_price: 3.99,
+            unit_price: 9.99,
           },
         ],
         payment_methods: {
