@@ -74,7 +74,7 @@ export async function POST(request: Request) {
     switch (type) {
       case "payment":
         const payment = new Payment(mpClient);
-        const paymentData = await payment.get(body.id);
+        const paymentData = await payment.get({ id: data.id });
         console.log(paymentData);
         break;
       case "subscription_preapproval":
