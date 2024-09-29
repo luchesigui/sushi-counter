@@ -57,10 +57,6 @@ export async function POST(request: Request) {
     hmac.update(manifest);
     const generatedHash = hmac.digest("hex");
 
-    // Log the generated hash and the v1 value for debugging
-    console.log("Generated Hash:", generatedHash);
-    console.log("Received v1:", v1);
-
     // Step 6: Compare the generated hash with v1 from x-signature
     if (generatedHash !== v1) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
