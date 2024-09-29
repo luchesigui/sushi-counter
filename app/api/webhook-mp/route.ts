@@ -2,6 +2,8 @@
 
 import { NextResponse } from "next/server";
 import crypto from "crypto";
+import { Payment } from "mercadopago";
+import mpClient from "@/app/lib/mercado-pago";
 
 export async function POST(request: Request) {
   try {
@@ -69,14 +71,11 @@ export async function POST(request: Request) {
     // Handle the webhook event
     const { type, data } = body;
 
-    console.log({ type, data });
-
     switch (type) {
       case "payment":
-        const payment = await fetch(
-          `https://api.mercadopago.com/v1/payments/${data.id}`
-        );
-        console.log(payment);
+        const payment = new Payment(mpClient);
+        const paymentData = await payment.get(data.id);
+        console.log(paymentData);
         break;
       case "subscription_preapproval":
         // Handle payment event
