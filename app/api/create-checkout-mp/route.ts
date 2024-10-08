@@ -11,24 +11,6 @@ export async function POST(req: NextRequest) {
         metadata: {
           test: "123",
         },
-        payer: {
-          name: "André",
-          surname: "Elias",
-          email: "dedekpo@gmail.com",
-          phone: {
-            area_code: "31",
-            number: "983399692",
-          },
-          identification: {
-            type: "CPF",
-            number: "13761278659",
-          },
-          address: {
-            street_name: "Rua Cristália",
-            street_number: "148",
-            zip_code: "32684036",
-          },
-        },
         items: [
           {
             id: "pagina-loveyuu-19",
@@ -44,7 +26,7 @@ export async function POST(req: NextRequest) {
           installments: 12,
         },
         auto_return: "approved",
-        notification_url: `${req.headers.get("origin")}/api/webhook-mp`,
+        // notification_url: `${req.headers.get("origin")}/api/webhook-mp`,
         back_urls: {
           success: `${req.headers.get("origin")}/obrigado`,
           failure: `${req.headers.get("origin")}/`,
