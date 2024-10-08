@@ -1,11 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
 export default function MercadoPagoButton() {
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const router = useRouter();
+  const [preferenceId, setPreferenceId] = useState<string | null>(null);
+
+  useEffect(() => {
+    handleButtonClick();
+    initMercadoPago(process.env.NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY!);
+  }, []);
 
   async function handleButtonClick() {
     try {
@@ -20,7 +27,8 @@ export default function MercadoPagoButton() {
         }),
       });
       const data = await response.json();
-      router.push(data.initPoint);
+      setPreferenceId(data.preferenceId);
+      // router.push(data.initPoint);
     } catch (error) {
       console.error("Error fetching preferenceId:", error);
     } finally {
@@ -29,12 +37,22 @@ export default function MercadoPagoButton() {
   }
 
   return (
-    <button
-      disabled={isCreatingCheckout}
-      onClick={handleButtonClick}
-      className="bg-blue-500 text-white px-4 py-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-      {isCreatingCheckout ? "Criando checkout..." : "Comprar com Mercado Pago"}
-    </button>
+    // <button
+    //   disabled={isCreatingCheckout}
+    //   onClick={handleButtonClick}
+    //   className="bg-blue-500 text-white px-4 py-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+    // >
+    //   {isCreatingCheckout ? "Criando checkout..." : "Comprar com Mercado Pago"}
+    // </button>
+    <>
+      {preferenceId && (
+        <Wallet
+          initialization={{
+            preferenceId,
+            redirectMode: "modal",
+          }}
+        />
+      )}
+    </>
   );
 }
