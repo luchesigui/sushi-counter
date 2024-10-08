@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 
 export default function MercadoPagoButton() {
-  const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
-  const router = useRouter();
+  // const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
+  // const router = useRouter();
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function MercadoPagoButton() {
 
   async function handleButtonClick() {
     try {
-      setIsCreatingCheckout(true);
+      // setIsCreatingCheckout(true);
       const response = await fetch("/api/create-checkout-mp", {
         method: "POST",
         headers: {
@@ -32,7 +32,7 @@ export default function MercadoPagoButton() {
     } catch (error) {
       console.error("Error fetching preferenceId:", error);
     } finally {
-      setIsCreatingCheckout(false);
+      // setIsCreatingCheckout(false);
     }
   }
 
