@@ -36,6 +36,8 @@ export async function POST(req: NextRequest) {
             title: "Página Loveyuu",
             quantity: 1,
             unit_price: 2.99,
+            category_id: "digital_goods",
+            currency_id: "BRL",
           },
         ],
         payment_methods: {
