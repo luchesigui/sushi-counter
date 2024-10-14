@@ -1,6 +1,4 @@
 import type { Viewport } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
 import { getSEOTags } from "@/app/lib/seo";
 
 export const viewport: Viewport = {
