@@ -1,5 +1,6 @@
-import { sendEmailTo } from "@/app/lib/ses";
 import "server-only"; // Evita que o código seja executado no cliente
+
+import { sendEmailTo } from "@/app/lib/ses";
 
 import Stripe from "stripe";
 import { db } from "@/app/lib/firebase";

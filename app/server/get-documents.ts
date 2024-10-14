@@ -1,4 +1,5 @@
 import "server-only";
+
 import { db, getDownloadURLFromPath } from "../lib/firebase";
 
 type SavedImagesType = {
