@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { Payment } from "mercadopago";
 import mpClient from "@/app/lib/mercado-pago";
+import { handleMercadoPagoPayment } from "@/app/server/mercado-pago/handle-payment";
 
 export async function POST(request: Request) {
   try {
@@ -66,7 +67,6 @@ export async function POST(request: Request) {
 
     // Step 7: Signature is valid, proceed to process the webhook
     const body = await request.json();
-    console.log("Verified webhook received:", body);
 
     // Handle the webhook event
     const { type, data } = body;
@@ -75,15 +75,17 @@ export async function POST(request: Request) {
       case "payment":
         const payment = new Payment(mpClient);
         const paymentData = await payment.get({ id: data.id });
-        if (paymentData.status === "approved") {
-          console.log("Payment approved");
-          console.log(paymentData);
+        if (
+          paymentData.status === "approved" || // Pagamento por cartão OU
+          paymentData.date_approved !== null // Pagamento por Pix
+        ) {
+          await handleMercadoPagoPayment(paymentData);
         }
         break;
-      case "subscription_preapproval":
-        console.log("Subscription preapproval event");
-        console.log(data);
-        break;
+      // case "subscription_preapproval": Eventos de assinatura
+      //   console.log("Subscription preapproval event");
+      //   console.log(data);
+      //   break;
       default:
         console.log("Unhandled event type:", type);
     }
