@@ -30,15 +30,14 @@ export default function Home() {
         </div>
       </main>
       <footer className="h-20 flex items-center justify-center">
-        Documentação e vídeos explicativos em breve!
-        {/* Na dúvida? Explore a{" "}
-        <Link className="font-bold mx-1" href="/documentacao">
-          documentação
-        </Link>{" "}
-        ou os{" "}
-        <Link className="font-bold mx-1" href="/tutorial">
+        Na dúvida? Confira os{" "}
+        <Link
+          className="font-bold mx-1"
+          href="https://www.youtube.com/watch?v=aRcszCr3kgA&list=PLeH52X2kI_ygF_fHBO3Ii6yWL9BlXLSpq"
+          target="_blank"
+        >
           vídeos explicativos
-        </Link> */}
+        </Link>
       </footer>
     </div>
   );
