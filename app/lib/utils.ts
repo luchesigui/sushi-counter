@@ -6,7 +6,7 @@ export const compressImage = (file: File): Promise<File> =>
       maxSizeMB: 0.2, // Set max size in MB
       maxWidthOrHeight: 900, // Max width/height
       useWebWorker: true, // Use web worker for compression
-      fileType: "image/jpeg", // Convert to WebP format
+      fileType: "image/jpeg", // Convert to jpeg format
     };
 
     imageCompression(file, options)
